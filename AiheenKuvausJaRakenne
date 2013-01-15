@@ -1,0 +1,11 @@
+Aihe: Laivanupotus
+Toteutetaan perinteinen laivanupotuspeli tietokoneversiona. Laivanupotusta voi pelata ainakin tietokonetta vastaan ja mahdollisesti myös toista ihmistä vastaan. Tarkoitus on toteuttaa peli yksinkertaisella graafisella käyttöliittymällä.
+
+Käyttäjät: 1-2 pelaajaa
+
+Käyttäjien toiminnot:
+Laivojen asettelu ruudukkoon ennen pelin aloittamista
+	Onnistuu kun vierekkäiset laivat eivät ole kosketuksissa toistensa 		kanssa
+Vastustajan ruudukosta ampumakohteen valitseminen
+Pelin lopettaminen ja uuden pelin aloittaminen
+
