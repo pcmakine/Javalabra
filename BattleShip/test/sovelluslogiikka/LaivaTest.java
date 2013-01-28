@@ -33,11 +33,15 @@ public class LaivaTest {
 
     @Before
     public void setUp() {
-        lauta = new Lauta(koko);
+        lauta = new Lauta(koko, 10);
     }
 
     @After
     public void tearDown() {
+    }
+    
+    public void teeTestiLaiva(Suunta suunta, int alku[]){
+        
     }
 
     @Test
@@ -46,8 +50,7 @@ public class LaivaTest {
         int [] odotettu = {8,9};
         int[] xkoord = new int[2];
         Laiva laiva;
-        String suunta = "oikealle";
-        lauta.teeLaiva(alku, suunta, 2);
+        lauta.teeLaiva(alku, Suunta.OIKEALLE, 2);
         laiva = lauta.haeLaivat()[0];
         xkoord =laiva.haeXKoordinaatti();
         assertArrayEquals(odotettu, xkoord);
@@ -57,8 +60,7 @@ public class LaivaTest {
         int [] odotettu = {9,9};
         int[] ykoord = new int[2];
         Laiva laiva;
-        String suunta = "oikealle";
-        lauta.teeLaiva(alku, suunta, 2);
+        lauta.teeLaiva(alku, Suunta.OIKEALLE, 2);
         laiva = lauta.haeLaivat()[0];
         ykoord =laiva.haeXKoordinaatti();
         assertArrayEquals(odotettu, ykoord);
