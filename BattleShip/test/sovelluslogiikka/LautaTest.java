@@ -45,11 +45,11 @@ public class LautaTest {
         int[] alku = new int[2];
         int rivi = 0;
         lauta.teeLaiva(alku, Suunta.OIKEALLE, laivanKoko);
-        for (int i = 0; i < maara - 1; i++) {
-            if (i > koko - laivanKoko - 2) {
+        for (int i = 1; i < maara; i++) {
+            if ((i * laivanKoko + i - 1) > koko - laivanKoko - 2) {
                 rivi++;
             }
-            alku[0] = i + laivanKoko + 1;
+            alku[0] = i * laivanKoko + i;
             alku[1] = rivi;
             if (lauta.teeLaiva(alku, Suunta.OIKEALLE, laivanKoko) == false) {
                 return false;
@@ -57,8 +57,8 @@ public class LautaTest {
         }
         return true;
     }
-    
-        @Test
+
+    @Test
     public void onnistuukoLaivaLaudanUlkopuolelle() {
         int[] alku = {10, 4};
         boolean onnistuuko = lauta.teeLaiva(alku, Suunta.OIKEALLE, 2);
@@ -127,7 +127,8 @@ public class LautaTest {
 
     @Test
     public void onnistuukoNeljaYhdenmittaistaLaivaa() {
-        assertEquals(true, teeMontaLaivaa(4, 1));
+        boolean onnistuuko = teeMontaLaivaa(4, 1);
+        assertEquals(true, onnistuuko);
     }
 
     @Test
@@ -143,5 +144,35 @@ public class LautaTest {
     @Test
     public void onnistuukoKaksiKolmenMittaistaLaivaa() {
         assertEquals(true, teeMontaLaivaa(2, 3));
+    }
+
+    @Test
+    public void lukitaankoOikeatRuudut() {
+        int[] lukitutX = {3, 4, 5, 3, 4, 5, 3, 4, 5, 3, 4, 5, 3, 4, 5};
+        int[] lukitutY = {2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 6};
+        lauta.teeLaiva(new int[]{4, 3}, Suunta.ALAS, 3);
+
+        assertEquals(true, tarkistaRuudut(lukitutX, lukitutY));
+    }
+
+    @Test
+    public void lukitaankoOikeatRuudutOikeassaAlakulmassa() {
+        int[] lukitutX = {7,7,8,9};
+        int[] lukitutY = {9,8,8,8};
+        lauta.teeLaiva(new int[]{8, 9}, Suunta.OIKEALLE, 2);
+
+        assertEquals(true, tarkistaRuudut(lukitutX, lukitutY));
+    }
+
+    public boolean tarkistaRuudut(int[] lukitutX, int[] lukitutY) {
+        boolean lukittu = true;
+        for (int i = 0; i < lukitutX.length; i++) {
+            if (!lauta.haeRuudut()[lukitutX[i]][lukitutY[i]].onkoLukittu()) {
+                lukittu = false;
+                System.out.println("ruutu " + lauta.haeRuudut()[lukitutX[i]][lukitutY[i]].haeX() + " , " + lauta.haeRuudut()[lukitutX[i]][lukitutY[i]].haeY()
+                        + " ei ole lukittu");
+            }
+        }
+        return lukittu;
     }
 }

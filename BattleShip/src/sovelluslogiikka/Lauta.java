@@ -5,11 +5,14 @@
 package sovelluslogiikka;
 
 /**
- *
  * @author pcmakine
+ *
  */
 public class Lauta {
 
+    /**
+     * Laudan ruutuja kuvaavat ruutu-oliot kaksiulotteisessa taulukossa
+     */
     private Ruutu[][] ruudut;
     private int koko;
     private Laiva[] laivat;
@@ -34,49 +37,53 @@ public class Lauta {
         }
     }
 
-    public void lukitseYmparillaOlevatRuudut(int xKoord[], int yKoord[]) {
-        for (int i = 0; i < yKoord.length; i++) {
-            for (int k = 0; k < 3; k++) {
-                try {
-                    ruudut[(xKoord[0] - 1) + k][yKoord[i] - 1].lukitseRuutu();
-                    if (i == yKoord.length - 1) {
-                        ruudut[(xKoord[i] - 1) + k][yKoord[i]].lukitseRuutu();      //kun mennään laivasta yli jatketaan vielä niin että kaikki ympäröivät tulevat lukittua
-                        if (i != koko - 1) {
-                            ruudut[(xKoord[i] - 1) + k][yKoord[i] + 1].lukitseRuutu();
-                        }
+    /**
+     * Lukitsee saamiensa x ja y koordinaattiparien ruudut, sekä niiden
+     * ympäröivät ruudut niin ettei näihin ruutuihin enää voida tehdä uusia
+     * laivoja.
+     *
+     * @param xKoord Taulukko laivan x-koordinaateista
+     * @param yKoord Taulukko laivan y-koordinaateista Pisteet ovat siis esim. [
+     * yKoord[0], xKoord[0] ], [ yKoord[1], xKoord[1] ] jne.
+     */
+    public void lukitseRuudut(int xKoord[], int yKoord[]) {
+        for (int i = 0; i < yKoord.length; i++) {           //käydään läpi kaikki laivan ruudut
+            for (int j = 0; j < 3; j++) {                   //käydään läpi ruudut x-1, x ja x+1              
+                for (int k = 0; k < 3; k++) {               //käydään läpi ruudut y-1, y ja y+1
+                    if (xKoord[i] == 0 && j == 0) {              //jos ollaan vasemmassa reunassa ei yritetä lukita oleamatonta ruutua
+                        j++;
                     }
-                } catch (ArrayIndexOutOfBoundsException e) {
-                    continue;
+                    if (yKoord[i] == 0 && k == 0) {             //jos ollaan yläreunassa ei yritetä lukita olematonta ruutua
+                        k++;
+                    }
+                    if ((xKoord[i] - 1 + j) < koko && (yKoord[i] - 1 + k) < koko) {             //jos ei mennä laivan ala- tai oikeasta reunasta yli    
+                        ruudut[xKoord[i] - 1 + j][yKoord[i] - 1 + k].lukitseRuutu();   // voidaan ruutu lukita
+                    }
                 }
             }
         }
     }
 
-    public boolean laivojaMahtuuViela(int pituus) {
-        if (eriMittaisiaLaivoja[pituus - 1] < eriMittaisiaLaivojaMax[pituus - 1]) {
-            return true;
-        }
-        return false;
+    public int laivojaMahtuuViela(int pituus) {
+        return (eriMittaisiaLaivojaMax[pituus - 1] - eriMittaisiaLaivoja[pituus - 1]);
     }
 
- /*   public Ruutu[] mitkaRuudut(int[] xKoord, int[] yKoord) {
-        Ruutu[] laivanRuudut = new Ruutu[xKoord.length];
-        for (int i = 0; i < xKoord.length; i++) {
-            laivanRuudut[i] = ruudut[yKoord[i]][xKoord[i]];
+    public void asetaLaivatRuutuihin(int[] xKoord, int[] yKoord) {
+        for (int i = 0; i < yKoord.length; i++) {
+            ruudut[xKoord[i]][yKoord[i]].asetaLaiva();
         }
-        return laivanRuudut;
-    }*/
+    }
 
     public boolean teeLaiva(int alku[], Suunta suunta, int pituus) {        //alku[0] on alun x koordinaatti ja alku[1] on alun y koordinaatti
         int[] xKoord = laskeXKoordinaatit(alku, suunta, pituus);
         int[] yKoord = laskeYKoordinaatit(alku, suunta, pituus);
-       // Ruutu[] laivanRuudut = mitkaRuudut(xKoord, yKoord);
-        if (onkoLaudalla(alku, suunta, pituus) && vieressaEiLaivaa(alku, suunta, pituus) && laivojaMahtuuViela(pituus)) {
+        if (onkoLaudalla(alku, suunta, pituus) && vieressaEiLaivaa(alku, suunta, pituus) && laivojaMahtuuViela(pituus) > 0) {
             Laiva laiva = new Laiva(xKoord, yKoord, suunta);
             laivat[laivoja] = laiva;
             eriMittaisiaLaivoja[pituus - 1]++;
             laivoja++;
-            lukitseYmparillaOlevatRuudut(xKoord, yKoord);
+            asetaLaivatRuutuihin(xKoord, yKoord);
+            lukitseRuudut(xKoord, yKoord);
             return true;
         }
         return false;
@@ -110,6 +117,17 @@ public class Lauta {
         return xKoordinaatit;
     }
 
+    /**
+     * Tarkistaa menisikö laiva jota yritetään tehdä laudan ulkopuolelle
+     *
+     * @param alku Taulukko jossa alku[0] on laivan alkupisteen x-koordinaatti
+     * ja alku[1] alkupisteen y-koordinaatti
+     * @param suunta Suunta johon laiva menee alkupisteestä. Joko oikealle tai
+     * alas
+     * @param pituus Kertoo laivan pituuden
+     * @return Palauttaa true jos laiva on laudalla ja muuten false
+     *
+     */
     public boolean onkoLaudalla(int alku[], Suunta suunta, int pituus) {          //tarkista meneekö laiva yli pelilaudan
         if (suunta == Suunta.ALAS) {
             if (alku[1] > (koko - pituus) || alku[0] < 0 || alku[1] < 0) {
@@ -123,14 +141,26 @@ public class Lauta {
         return true;
     }
 
-    //vaatii testaamista
-    public boolean vieressaEiLaivaa(int alku[], Suunta suunta, int pituus) { //laivaa ei voi tehdä jos viereisissä ruuduissa on laiva
+    /**
+     * @param alku Taulukko jossa alku[0] on laivan alkupisteen x-koordinaatti
+     * ja alku[1] alkupisteen y-koordinaatti
+     * @param suunta Suunta johon laiva menee alkupisteestä. Joko oikealle tai
+     * alas
+     * @param pituus Kertoo laivan pituuden
+     * @return Palauttaa true jos ruutujen joihin laivaa yritetään tehdä
+     * vieressä ei ole laivaa, muuten false
+     */
+    public boolean vieressaEiLaivaa(int alku[], Suunta suunta, int pituus) {        //laivaa ei voi tehdä jos viereisissä ruuduissa on laiva
         int[] xKoord = laskeXKoordinaatit(alku, suunta, pituus);
         int[] yKoord = laskeYKoordinaatit(alku, suunta, pituus);
         for (int i = 0; i < xKoord.length; i++) {
             for (int j = 0; j < yKoord.length; j++) {
-                if (ruudut[xKoord[i]][yKoord[j]].onkoLukittu()) {
-                    return false;
+                try {
+                    if (ruudut[xKoord[i]][yKoord[j]].onkoLukittu()) {
+                        return false;
+                    }
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    continue;
                 }
             }
         }
@@ -151,6 +181,14 @@ public class Lauta {
 
     public Ruutu[][] haeRuudut() {
         return ruudut;
+    }
+
+    public int[] haeErimittaisiaLaivoja() {
+        return eriMittaisiaLaivoja;
+    }
+
+    public int[] haeErimittaisiaLaivojaMax() {
+        return eriMittaisiaLaivojaMax;
     }
 
     @Override

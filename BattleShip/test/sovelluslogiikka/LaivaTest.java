@@ -44,7 +44,7 @@ public class LaivaTest {
         
     }
 
-    @Test
+ /*   @Test
     public void horisontaalisellaLaivallaOikeatXKoordinaatit() {
         int[] alku = {koko - 1, koko - 2};
         int [] odotettu = {8,9};
@@ -64,5 +64,5 @@ public class LaivaTest {
         laiva = lauta.haeLaivat()[0];
         ykoord =laiva.haeXKoordinaatti();
         assertArrayEquals(odotettu, ykoord);
-    }
+    }*/
 }

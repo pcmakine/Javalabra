@@ -17,7 +17,6 @@ public class Laiva {
     int osumia;
    // Ruutu ruudut[];
     
-
     public Laiva(int xKoord[], int yKoord[], Suunta suunta) {
         this.xKoord = xKoord;
         this.yKoord = yKoord;

@@ -12,12 +12,16 @@ public class Ruutu {
 
     private boolean onAmmuttu;
     private boolean onkoLukittu;
+    private boolean laiva;
     private int x;
     private int y;
 
     public Ruutu(int x, int y) {
         this.onAmmuttu = false;
         this.onkoLukittu = false;
+        this.laiva = false;
+        this.x = x;
+        this.y = y;
     }
 
     public void ampuTulee() {
@@ -40,19 +44,32 @@ public class Ruutu {
         return y;
     }
 
+    public boolean onkoLaiva() {
+        return laiva;
+    }
+
+    public void asetaLaiva() {
+        laiva = true;
+    }
+
     public boolean onkoLukittu() {
         return onkoLukittu;
     }
 
-    /*   public boolean onkoSama(Ruutu ruutu) {
-     return this.x == ruutu.x && this.y == ruutu.y;
-     }*/
     public String toString() {
         String tulostettava = "";
         if (onAmmuttu) {
             tulostettava = "X";
-        } else if (onkoLukittu) {
+        } else {
+            tulostettava = "O";
+        }
+        if (onkoLukittu) {
             tulostettava = "Z";
+        } else {
+            tulostettava = "O";
+        }
+        if (laiva) {
+            tulostettava = "L";
         } else {
             tulostettava = "O";
         }
