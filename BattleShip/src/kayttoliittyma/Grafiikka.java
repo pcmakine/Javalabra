@@ -2,7 +2,7 @@ package kayttoliittyma;
 
 /**
  *
- * @author pcmakine
+ * Graafinen käyttöliittymä
  */
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,6 +20,7 @@ import java.awt.FlowLayout;
 import java.awt.*;
 import sovelluslogiikka.*;
 
+
 public class Grafiikka {
 
     JFrame ikkuna;
@@ -27,17 +28,23 @@ public class Grafiikka {
     JPanel lauta;
     JPanel opponentBoard;
     JPanel mySide;
+    JPanel controls;
     JPanel opponentSide;
-    Lauta pelilauta;
+    Lauta peliLauta;
+    Pelaaja pelaaja;
     Object[] possibilities = {"Horizontal ship", "Vertical ship"};
     Suunta suunta;
     JButton[][] buttons;
     JButton[][] opponentButtons;
     JLabel[] vertLabels;
     JLabel[] horLabels;
+    Color buttonDefaultColor;
 
-    public Grafiikka(Lauta pelilauta) {
-        this.pelilauta = pelilauta;
+    boolean gameStarted;
+    
+    public Grafiikka(Lauta pelilauta, Pelaaja pelaaja) {
+        this.peliLauta = pelilauta;
+        this.pelaaja = pelaaja;
         initUI();
     }
 
@@ -71,11 +78,11 @@ public class Grafiikka {
     }
 
     public void checkErrors(int[] alku, Suunta suunta, int pituus) {
-        if (!pelilauta.onkoLaudalla(alku, suunta, pituus)) {
+        if (!peliLauta.onkoLaudalla(alku, suunta, pituus)) {
             presentWarning("Antamasi laiva menisi laudan ulkopuolelle. \n "
                     + "Ole hyvä ja anna uudet arvot");
         }
-        if (!pelilauta.vieressaEiLaivaa(alku, suunta, pituus)) {
+        if (!peliLauta.vieressaEiLaivaa(alku, suunta, pituus)) {
             presentWarning("Antamasi laiva menisi olemassaolevan laivan viereen/päälle. \n"
                     + " Ole hyvä ja anna uudet arvot");
         }
@@ -88,12 +95,30 @@ public class Grafiikka {
                 JOptionPane.WARNING_MESSAGE);
     }
 
+    public void addRandomShips() {
+        if (gameStarted) {
+            presentWarning("Peli on jo aloitettu! Et voi enää lisätä laivoja. Klikkaa ruutua vastustajan laudalta ampuaksesi.");
+        }
+        else{
+        int laivoja = peliLauta.haeErimittaisiaLaivojaMax().length;
+        if (continueWhere()[1] != laivoja && continueWhere()[0] != peliLauta.haeErimittaisiaLaivojaMax()[laivoja - 1]) {
+            Lauta uusiLauta = new Lauta(peliLauta.haeKoko(), peliLauta.haeErimittaisiaLaivoja().length);
+            peliLauta = uusiLauta;
+            Pelaaja uusiPelaaja = new Pelaaja(peliLauta);
+            pelaaja = uusiPelaaja;
+        }
+        pelaaja.arvoLaivat();
+        clearShipDrawings();
+        drawShips();
+        }
+    }
+
     public int[] continueWhere() {
         int availableShips = -1;
         int shipLength = -1;
         for (int i = 4; i > 0; i--) {
-            if (pelilauta.laivojaMahtuuViela(i) > 0) {
-                availableShips = pelilauta.laivojaMahtuuViela(i);
+            if (peliLauta.laivojaMahtuuViela(i) > 0) {
+                availableShips = peliLauta.laivojaMahtuuViela(i);
                 shipLength = i;
                 return new int[]{availableShips, shipLength};
             }
@@ -107,7 +132,7 @@ public class Grafiikka {
             try {
                 for (int i = mark[1]; i >= 1; i--) {                  //laivoja yhteensä
                     int pituus = i;
-                    for (int j = pelilauta.haeErimittaisiaLaivoja()[continueWhere()[1] - 1]; j < (5 - i); j++) {       //kuinka monta tietyn mittaista laivaa
+                    for (int j = peliLauta.haeErimittaisiaLaivoja()[continueWhere()[1] - 1]; j < (5 - i); j++) {       //kuinka monta tietyn mittaista laivaa
                         createShips(pituus);
                         if (continueWhere()[0] == -1) {
                             break;
@@ -133,24 +158,38 @@ public class Grafiikka {
                     suunta = Suunta.ALAS;
                 }
             } else {
-                if (pelilauta.haeErimittaisiaLaivoja()[0] == 0) {
+                if (peliLauta.haeErimittaisiaLaivoja()[0] == 0) {
                     askDirection("");
                 }
             }
             alku[0] = askInput("Anna alkukoordinaatti x") - 1;
             alku[1] = askInput("Anna alkukoordinaatti y") - 1;
             checkErrors(alku, suunta, pituus);
-        } while (!pelilauta.onkoLaudalla(alku, suunta, pituus) || !pelilauta.vieressaEiLaivaa(alku, suunta, pituus));
-        pelilauta.teeLaiva(alku, suunta, pituus);
+        } while (!peliLauta.onkoLaudalla(alku, suunta, pituus) || !peliLauta.vieressaEiLaivaa(alku, suunta, pituus));
+        peliLauta.teeLaiva(alku, suunta, pituus);
         drawShips();
-       // System.out.println(pelilauta);
+    }
+    
+    public void startGame(){
+        gameStarted = true;
     }
 
     public void drawShips() {
-        for (int i = 0; i < pelilauta.haeKoko(); i++) {
-            for (int j = 0; j < pelilauta.haeKoko(); j++) {
-                if (pelilauta.haeRuudut()[i][j].onkoLaiva()) {
+        buttonDefaultColor = buttons[0][0].getBackground();
+        for (int i = 0; i < peliLauta.haeKoko(); i++) {
+            for (int j = 0; j < peliLauta.haeKoko(); j++) {
+                if (peliLauta.haeRuudut()[i][j].onkoLaiva()) {
                     buttons[j][i].setBackground(Color.blue);
+                }
+            }
+        }
+    }
+
+    public void clearShipDrawings() {
+        for (int i = 0; i < peliLauta.haeKoko(); i++) {
+            for (int j = 0; j < peliLauta.haeKoko(); j++) {
+                if (!peliLauta.haeRuudut()[i][j].onkoLaiva()) {
+                    buttons[j][i].setBackground(buttonDefaultColor);
                 }
             }
         }
@@ -194,19 +233,48 @@ public class Grafiikka {
     }
 
     public final void initUI() {
-
         ikkuna = new JFrame("Laivanupotus");
         window = new JPanel(new BorderLayout());
         lauta = new JPanel();
         opponentBoard = new JPanel();
         mySide = new JPanel();
+        controls = new JPanel();
         opponentSide = new JPanel();
         buttons = new JButton[10][10];
         opponentButtons = new JButton[10][10];
         mySide.setLayout(new BoxLayout(mySide, BoxLayout.PAGE_AXIS));
         opponentSide.setLayout(new BoxLayout(opponentSide, BoxLayout.PAGE_AXIS));
 
+
+        //Making the control buttons
         JButton addShips = new JButton("Add ships!");
+
+        ActionListener addShipsListener = new ActionListener() {
+            public void actionPerformed(ActionEvent actionEvent) {
+                addShips();
+            }
+        };
+        addShips.addActionListener(addShipsListener);
+
+        JButton randomShips = new JButton("Add ships on the board randomly!");
+        ActionListener randomShipsListener = new ActionListener() {
+            public void actionPerformed(ActionEvent actionEvent) {
+                addRandomShips();
+            }
+        };
+        randomShips.addActionListener(randomShipsListener);
+
+        JButton startGame = new JButton("Start game!");
+        ActionListener startGameListener = new ActionListener() {
+            public void actionPerformed(ActionEvent actionEvent) {
+                startGame();
+            }
+        };
+        startGame.addActionListener(startGameListener);
+
+
+
+
         JLabel me = new JLabel("My board");
         JLabel opponent = new JLabel("Opponent's board");
 
@@ -218,26 +286,28 @@ public class Grafiikka {
         makeAlphabets();
         makeButtons();
 
-        ActionListener actionListener = new ActionListener() {
-            public void actionPerformed(ActionEvent actionEvent) {
-                addShips();
-            }
-        };
-
-        addShips.addActionListener(actionListener);
 
         ikkuna.setTitle("Laivanupotus");
 
         ikkuna.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setSize(400, 500);
-        ikkuna.setSize(400, 500);
+
 
         ikkuna.setContentPane(window);
+        controls.add(addShips);
+        controls.add(randomShips);
+        controls.add(startGame);
+
+        Dimension dimension = new Dimension(300, 350);
+        Dimension dimension2 = new Dimension(400, 400);
+
+        opponentSide.setPreferredSize(dimension2);
+        lauta.setPreferredSize(dimension);
+        opponentBoard.setPreferredSize(dimension);
 
         mySide.add(me);
         mySide.add(lauta);
-        mySide.add(addShips);
-
+        mySide.add(controls);
+        
         opponentSide.add(opponent);
         opponentSide.add(opponentBoard);
         window.add(mySide, BorderLayout.WEST);

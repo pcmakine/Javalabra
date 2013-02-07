@@ -5,8 +5,9 @@
 package sovelluslogiikka;
 
 /**
+ * Mallintaa pelilautaa ja pitää kirjaa sen Ruutu tyyppisistä ruutuolioista
  * @author pcmakine
- *
+ * 
  */
 public class Lauta {
 

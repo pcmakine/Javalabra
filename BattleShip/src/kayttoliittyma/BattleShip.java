@@ -4,6 +4,7 @@
  */
 package kayttoliittyma;
 
+import java.awt.event.ActionEvent;
 import javax.swing.SwingUtilities;
 import sovelluslogiikka.Lauta;
 
@@ -15,15 +16,15 @@ import sovelluslogiikka.*;
 
 public class BattleShip {
 
-    private static Laiva laiva;
-    private static Laiva[] laivat;
-
     public static void main(String[] args) {
         boolean gameOver = false;
-        final Lauta lauta = new Lauta(10, 5);
+        final Lauta lauta = new Lauta(10, 4);
+        final Pelaaja pelaaja = new Pelaaja(lauta);
+        
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                Grafiikka ikkuna = new Grafiikka(lauta);
+                Grafiikka ikkuna = new Grafiikka(lauta, pelaaja);
+                ikkuna.drawShips();
             }
         });
     }

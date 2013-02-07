@@ -5,7 +5,7 @@
 package sovelluslogiikka;
 
 /**
- *
+ * Laudan yksi ruutu. Tietää, onko siinä laivaa ja onko viereisessä ruudussa laivaa (onkolukittu) sekä onko ruutuun ammuttu
  * @author pcmakine
  */
 public class Ruutu {
