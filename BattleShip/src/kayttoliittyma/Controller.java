@@ -11,7 +11,7 @@ package kayttoliittyma;
 import sovelluslogiikka.Lauta;
 import sovelluslogiikka.Pelaaja;
 import sovelluslogiikka.Suunta;
-import sovelluslogiikka.Laiva;
+import highScore.*;
 
 public class Controller {
 
