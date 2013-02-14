@@ -17,14 +17,15 @@ import sovelluslogiikka.*;
 public class BattleShip {
 
     public static void main(String[] args) {
-        boolean gameOver = false;
         final Lauta lauta = new Lauta(10, 4);
         final Pelaaja pelaaja = new Pelaaja(lauta);
-        
+
+
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                Grafiikka ikkuna = new Grafiikka(lauta, pelaaja);
-                ikkuna.drawShips();
+                Controller controller = new Controller(pelaaja);
+                Grafiikka ikkuna = new Grafiikka(controller);
+
             }
         });
     }

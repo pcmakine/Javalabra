@@ -37,6 +37,14 @@ public class Lauta {
             }
         }
     }
+    
+    public boolean allShipsDone(){
+        int maxShips = 0;
+        for (int i = 0; i < eriMittaisiaLaivojaMax.length; i++) {
+            maxShips = maxShips + eriMittaisiaLaivojaMax[i];
+        }
+        return laivoja == maxShips;     
+    }
 
     /**
      * Lukitsee saamiensa x ja y koordinaattiparien ruudut, sekä niiden
@@ -167,7 +175,7 @@ public class Lauta {
         }
         return true;
     }
-
+    
     public int haeLaivojenMaara() {
         return laivoja;
     }

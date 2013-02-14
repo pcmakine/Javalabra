@@ -21,12 +21,18 @@ public class Laiva {
         this.xKoord = xKoord;
         this.yKoord = yKoord;
         this.suunta = suunta;
-        osumat = new int[xKoord.length][yKoord.length];
+        osumat = new int[xKoord.length][2];
         osumia = 0;
     }
 
+    public int montakoOsumaa(){
+        return osumia;
+    }
     public int[] haeXKoordinaatti() {
         return xKoord;
+    }
+    public int[][] haeOsumat(){
+        return osumat;
     }
 
     public int[] haeYKoordinaatti() {
@@ -40,6 +46,7 @@ public class Laiva {
     public void asetaOsuma(int osumapiste[]) {    //osumapiste annetaan muodossa x, y
         osumat[osumia][0] = osumapiste[0];
         osumat[osumia][1] = osumapiste[1];
+        osumia++;
     }
 
     public int haePituus() {
@@ -47,6 +54,13 @@ public class Laiva {
             return yKoord.length;
         }
         return xKoord.length;
+    }
+    
+    public boolean sankAlready(){
+        if (osumia == xKoord.length) {
+            return true;
+        }
+        return false;
     }
 
 
