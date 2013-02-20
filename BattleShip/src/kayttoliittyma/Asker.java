@@ -5,6 +5,7 @@
 package kayttoliittyma;
 
 /**
+ * Varoittaa käyttäjää dialogi ikkunalla jos jokin menee pieleen
  *
  * @author pcmakine
  */
@@ -13,44 +14,44 @@ import javax.swing.JOptionPane;
 
 public class Asker {
 
-    JFrame ikkuna;
-    private Object[] possibilities = {"Horizontal ship", "Vertical ship"};
+    /**
+     * Ikkuna jolle tehtävä dialogi kuuluu. Ohjelman pääikkuna.
+     */
+    JFrame mainWindow;
 
-    public Asker(JFrame ikkuna) {
-        this.ikkuna = ikkuna;
+    /**
+     * Luo uuden olion ja asettaa parametrina saadun JFramen muistiin
+     *
+     * @param mainWindow ikkuna johon varoitusdialogit tulevat, käytännössä
+     * ohjelman pääikkuna
+     */
+    public Asker(JFrame mainWindow) {
+        this.mainWindow = mainWindow;
     }
 
-    public int askInput(String message) {
+    public String askInput(String message) {
         String dialog = "";
-        int input = -1;
-        do {
-            try {
-                dialog = (String) JOptionPane.showInputDialog(ikkuna, message, "Alkukoordinaatit", JOptionPane.PLAIN_MESSAGE);
-                input = Integer.parseInt(dialog);
-            } catch (NumberFormatException e) {
-                continue;
-            }
-            if (input > 10 || input < 1) {
-                presentWarning("Antamasi koordinaatti on laudan ulkopuolella."
-                        + "\nOle hyvä ja anna uudet koordinaatit.");
-            }
-        } while (dialog.isEmpty() || input > 10 || input < 1);
-        return input;
-    }
+        try {
+            do {
+                dialog = (String) JOptionPane.showInputDialog(mainWindow, message, "Anna pelaajan nimi", JOptionPane.PLAIN_MESSAGE);
 
-    public String askDirection(String message) {
-        String dialog = "";
-        if (message.equals("")) {
-            JOptionPane.showMessageDialog(ikkuna, "Enää yhden mittaiset laivat jäljellä, paina ok jatkaaksesi");
-        } else {
-            dialog = (String) JOptionPane.showInputDialog(ikkuna, message, null, JOptionPane.PLAIN_MESSAGE, null, possibilities,
-                    "Horizontal ship");
+                if (dialog.length() > 10) {
+                    presentWarning("Liian pitkä nimi! Anna alle kymmenen merkin pituinen nimi.");
+                }
+
+            } while (dialog.length() > 10 || dialog == null);
+        } catch (NullPointerException e) {
         }
         return dialog;
     }
 
+    /**
+     * Esittää käyttäjälle parametrina saamansa viestin
+     *
+     * @param message viesti joka esitetään käyttäjälle
+     */
     public void presentWarning(String message) {
-        JOptionPane.showMessageDialog(ikkuna,
+        JOptionPane.showMessageDialog(mainWindow,
                 message,
                 "Nyt tarkkana!",
                 JOptionPane.WARNING_MESSAGE);

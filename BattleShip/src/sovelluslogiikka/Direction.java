@@ -5,9 +5,9 @@
 package sovelluslogiikka;
 
 /**
- *
+ * Suunnat joihin laivat voivat menn채 alkupisteest채
  * @author Pete
  */
-public enum Suunta {
-    ALAS, OIKEALLE
+public enum Direction {
+    DOWN, RIGHT
 }

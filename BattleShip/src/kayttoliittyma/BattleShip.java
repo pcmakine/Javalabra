@@ -4,30 +4,27 @@
  */
 package kayttoliittyma;
 
-import java.awt.event.ActionEvent;
+import sovelluslogiikka.Controller;
+import sovelluslogiikka.*;
+import highScore.*;
 import javax.swing.SwingUtilities;
-import sovelluslogiikka.Lauta;
+import sovelluslogiikka.Board;
 
 /**
  *
  * @author pcmakine
  */
-import sovelluslogiikka.*;
-import highScore.*;
-
 public class BattleShip {
 
     public static void main(String[] args) {
-        final Lauta lauta = new Lauta(10, 4);
-        final Pelaaja pelaaja = new Pelaaja(lauta);
-        HighScore highscore = new HighScore();
+        Board lauta = new Board(10, 4);
+        final Player pelaaja = new Player(lauta);
+        final HighScore highscore = new HighScore();
 
-        System.out.print(highscore.getHighscoreString());
-        
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                Controller controller = new Controller(pelaaja);
-                Grafiikka ikkuna = new Grafiikka(controller);
+                Controller controller = new Controller(pelaaja, highscore);
+                MainWindow window = new MainWindow(controller);
 
             }
         });

@@ -34,7 +34,10 @@ public class HighScore {
         Collections.sort(scores, comparator);
     }
 
-    public void reset() {
+    public void reset() {     
+        loadScoreFile();
+        scores.removeAll(scores);
+        updateScoreFile();
     }
 
     public ArrayList<Score> getScores() {

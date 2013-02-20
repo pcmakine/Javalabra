@@ -30,6 +30,10 @@ Tuntikirjanpito
 7.2: 2,5h Uusia nappeja guihin, muutamia testejä sekä metodi joka arpoo laivoja satunnaisiin ruutuihn ja metodit jotka hoitavat tämän piirtämisen guihin.
 
 13.2: 5h käyttöliittymäkoodin jakamista omiin luokkiinsa, uusia metodeja sekä käyttöliittymän ja logiikan liittämistä toisiinsa
+15.2: 7h
+16.2: 7h lähinnä tekoälyä
+18.2: 6h lähinnä käyttöliittymäkoodin jakamista selkeämpiin paketteihin ja luokkiin sekä dokumentointia. Myös mm. testien korjailua
+19.2: 2h tilannetieto näkyviin peliin
 <<<<<<< HEAD
 =======
 
