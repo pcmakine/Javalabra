@@ -17,17 +17,35 @@ public class MainWindow extends JFrame {
      * Pääpaneeli, joka on koko ikkunan kokoinen
      */
     private JPanel mainPanel;
+    
     /**
      * Kontroller luokka joka toimii linkkinä GUI:n ja sovelluslogiikan välillä
      */
     private Controller controller;
+    
     /**
      * Piirto -olio joka piirtää laudan aina vuoron jälkeen. Käytännössä vaihtaa
      * pelilautana toimivien nappuloiden taustaväriä tai asettaa niihin tekstiä
      */
     private Draw drawer;
+    
+    
+    /**
+     * Sivupaneeli, josta löytyvät valinnat laivojen pituuden ja orien-
+     * taation valitsemiseen sekä tilannetietopaneeli.
+     */
     private SidePane sidePane;
+    
+    /**
+     * Olio joka hoitaa syötteiden kysymisen käyttäjältä sekä ilmoitusten
+     * esittämisen käyttäjälle.
+     */
     private Asker asker;
+    
+    /**
+     * Pääikkunassa oleva menubar
+     */
+    private MyMenuBar menu;
 
     /**
      * Luo uuden pääikkunan ohjelmalle sekä antaa controller oliolle piirrustus
@@ -49,11 +67,6 @@ public class MainWindow extends JFrame {
 
     }
 
-//    public void setPlayerNames() {
-//        sidePane.getStatsPane().setPlayerName(asker.askInput("Anna nimesi"));
-//        sidePane.getStatsPane().setOpponentName("Tietokone");
-//    }
-
     /**
      * Tekee pääikkunan komponentit ja lisää ne ikkunaan.
      */
@@ -62,27 +75,25 @@ public class MainWindow extends JFrame {
         BoardArea mySide = new BoardArea(controller, "player", drawer);
         BoardArea opponentSide = new BoardArea(controller, "opponent", drawer);
         ControlButtonPane controlButtons = new ControlButtonPane(controller);
+        menu = new MyMenuBar(controller);
+        this.setJMenuBar(menu);
         mainPanel.add(sidePane, BorderLayout.WEST);
         mainPanel.add(mySide, BorderLayout.CENTER);
         mainPanel.add(opponentSide, BorderLayout.EAST);
         mainPanel.add(controlButtons, BorderLayout.SOUTH);
         drawer.initDrawValues(sidePane.getStatsPane());
-
     }
 
     /**
-     * Pakkaa kaiken ikkunassa yhteen ja alustaa piirrustusolion myöhempää
-     * käyttöä varten
+     * Pakkaa kaiken ikkunassa ja asettaa ikkunan näkyväksi
      */
     public final void initUI() {
         mainPanel = new JPanel(new BorderLayout());
         this.setContentPane(mainPanel);
         createAndAddComponents();
-
-        
+     
         this.pack();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
-
     }
 }

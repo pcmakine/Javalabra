@@ -19,7 +19,7 @@ public class ControlButtonPane extends JPanel {
     private Controller controller;
     private JButton randomShips;
     private JButton startGame;
-    private JButton newGame;
+//    private JButton newGame;
     private JButton drawOpponent;
 
     public ControlButtonPane(Controller controller) {
@@ -31,14 +31,14 @@ public class ControlButtonPane extends JPanel {
     private void createComponents() {
         randomShipsButton();
         startGameButton();
-        newGameButton();
+//        newGameButton();
         drawOpponentButton();
     }
 
     private void addComponentsTogether() {
         this.add(randomShips);
         this.add(startGame);
-        this.add(newGame);
+//        this.add(newGame);
         this.add(drawOpponent);
     }
 
@@ -62,15 +62,15 @@ public class ControlButtonPane extends JPanel {
         startGame.addActionListener(startGameListener);
     }
 
-    private void newGameButton() {
-        newGame = new JButton("Uusi peli");
-        ActionListener newGameListener = new ActionListener() {
-            public void actionPerformed(ActionEvent actionEvent) {
-                controller.newGame();
-            }
-        };
-        newGame.addActionListener(newGameListener);
-    }
+//    private void newGameButton() {
+//        newGame = new JButton("Uusi peli");
+//        ActionListener newGameListener = new ActionListener() {
+//            public void actionPerformed(ActionEvent actionEvent) {
+//                controller.newGame();
+//            }
+//        };
+//        newGame.addActionListener(newGameListener);
+//    }
 
     private void drawOpponentButton() {
         drawOpponent = new JButton("Näytä vastustajan laivat");

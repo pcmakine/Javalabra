@@ -34,7 +34,7 @@ public class HighScore {
         Collections.sort(scores, comparator);
     }
 
-    public void reset() {     
+    public void reset() {
         loadScoreFile();
         scores.removeAll(scores);
         updateScoreFile();
@@ -48,8 +48,22 @@ public class HighScore {
 
     public void addScore(String name, int score) {
         loadScoreFile();
+        boolean topten = checkIfScoreTopTen(score);
         scores.add(new Score(name, score));
         updateScoreFile();
+    }
+
+    public boolean checkIfScoreTopTen(int score) {
+        if (getScores().size() >= 10) {
+            if (score < getScores().get(10).getScore()) {       //rmb to check that the arraylist get 10 is not null!!!
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return true;                                    //alle kymmenen highscorea
+        }
+
     }
 
     public String getHighscoreString() {
@@ -65,7 +79,7 @@ public class HighScore {
             x = max;
         }
         while (i < x) {
-            highscoreString += (i + 1) + ".\t" + scores.get(i).getName() + "\t\t" + scores.get(i).getScore() + "\n";
+            highscoreString += (i + 1) + ". \t\t" + scores.get(i).getName() + "  \t\t" + scores.get(i).getScore() + "\n";
             i++;
         }
         return highscoreString;

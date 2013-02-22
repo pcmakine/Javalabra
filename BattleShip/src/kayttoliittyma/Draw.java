@@ -34,6 +34,10 @@ public class Draw {
      * Kustomoitu fontti, jotta saadaan nappien sisälle riittävän pientä tekstiä
      */
     Font newButtonFont;
+    /**
+     * Sivupaneelissa oleva tekstikenttä johon tämä luokka päivittää tilanteen
+     * jokaisen vuoron lopussa.
+     */
     StatsPane stats;
 
     /**
@@ -51,10 +55,21 @@ public class Draw {
         this.stats = stats;
     }
 
+    /**
+     * Asettaa squares taulukon osoittamaan pelaajan nappuloihin
+     *
+     * @param buttons pelaajan nappulat (eli "ruudut")
+     */
     public void setPlayerButtons(JButton[][] buttons) {
         squares = buttons;
     }
 
+    /**
+     * Asettaa opponentsquares taulukon osoittamaan vastustajan nappuloihin
+     *
+     * @param buttons vastustajan nappulat (eli "ruudut"). Tällä hetkellä siis
+     * tietokonepelaajan koska moninpeliä ei ole vielä toteutettu.
+     */
     public void setOpponentButtons(JButton[][] buttons) {
         opponentSquares = buttons;
     }
@@ -65,14 +80,14 @@ public class Draw {
      *
      * @param opponentBoard vastustajan lauta, joka pitää piirtää
      */
-    public void drawOpponentBoard(Board opponentBoard) {
-        clearOpponent(opponentBoard);
-        for (int i = 0; i < opponentBoard.getSize(); i++) {
-            for (int j = 0; j < opponentBoard.getSize(); j++) {
-                if (opponentBoard.getSquares()[i][j].isShot()) {
+    public void drawOpponentBoard(Board[] boards, int turns) {
+        drawBoard(boards, turns);   
+        for (int i = 0; i < boards[1].getSize(); i++) {
+            for (int j = 0; j < boards[1].getSize(); j++) {
+                if (boards[1].getSquares()[i][j].isShot()) {
                 }
-                if (opponentBoard.getSquares()[i][j].isShip()) {
-                    if (opponentBoard.getSquares()[i][j].isShot()) {
+                if (boards[1].getSquares()[i][j].isShip()) {
+                    if (boards[1].getSquares()[i][j].isShot()) {
                         opponentSquares[j][i].setBackground(Color.gray);
                     } else {
                         opponentSquares[j][i].setBackground(Color.blue);
@@ -104,8 +119,9 @@ public class Draw {
 
     /**
      * Päivittää tilannetiedon monta laivaa kummallakin pelaajalla on
-     * @param boards pelaajien laudat joilla laivat ovat. Boards[0] pelaajan
-     * ja boards[1] vastustajan lauta
+     *
+     * @param boards pelaajien laudat joilla laivat ovat. Boards[0] pelaajan ja
+     * boards[1] vastustajan lauta
      */
     public void updateStats(Board[] boards, int turns) {
         int[] amount = new int[2];
@@ -115,15 +131,14 @@ public class Draw {
                 amount[i] = 0;
                 break;
             }
-                ships = boards[i].getShips();
+            ships = boards[i].getShips();
 
             for (int j = 0; j < ships.length; j++) {
-                try{
-                if (!ships[j].sankAlready()) {
-                    amount[i]++;
-                }
-                }catch(NullPointerException e){
-                    
+                try {
+                    if (!ships[j].sankAlready()) {
+                        amount[i]++;
+                    }
+                } catch (NullPointerException e) {
                 }
             }
         }
@@ -147,19 +162,6 @@ public class Draw {
     }
 
     /**
-     * Vaihtaa vastustajan laudan nappien taustavärin oletusväriksi
-     *
-     * @param board vastustajan lauta saadaan parametrina
-     */
-    public void clearOpponent(Board board) {                    //olettaa että laudat samankokoisia
-        for (int i = 0; i < board.getSize(); i++) {
-            for (int j = 0; j < board.getSize(); j++) {
-                opponentSquares[j][i].setBackground(buttonDefaultColor);
-            }
-        }
-    }
-
-    /**
      * Vaihtaa yhden pelaajan laudan napin taustavärin siniseksi
      *
      * @param boards boards[0] on pelaajan lauta
@@ -172,6 +174,13 @@ public class Draw {
         }
     }
 
+    /**
+     * Vaihtaa yhden pelaajan ja vastustajan laudan napin taustavärin 
+     * harmaaksi
+     * @param boards boards[0] pelaajan lauta, boards[1] vastustajan lauta
+     * @param i napin y-koordinaatti
+     * @param j napin x-koordinaatti
+     */
     public void setShotShipSquaresGray(Board[] laudat, int i, int j) {
         for (int k = 0; k < 2; k++) {
             if (laudat[k].getSquares()[i][j].isShot() && laudat[k].getSquares()[i][j].isShip()) {

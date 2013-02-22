@@ -6,8 +6,8 @@ package sovelluslogiikka;
 
 /**
  * Mallintaa tietokonepelaajaa ja perii pelaaja -olion metodit. Tällä hetkellä
- * käytössä on kaksi mahdollista ampumismetodia.
- *
+ * käytössä on kaksi mahdollista ampumismetodia, täysin satunnainen randomshoot
+ * sekä hieman fiksumpi smartshoot
  *
  *
  * @author Pete

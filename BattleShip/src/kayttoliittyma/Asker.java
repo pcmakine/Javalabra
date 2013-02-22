@@ -11,6 +11,7 @@ package kayttoliittyma;
  */
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import highScore.HighScore;
 
 public class Asker {
 
@@ -27,6 +28,13 @@ public class Asker {
      */
     public Asker(JFrame mainWindow) {
         this.mainWindow = mainWindow;
+    }
+
+    public void showHighScore(String message, HighScore highscore) {
+        JOptionPane.showMessageDialog(mainWindow,
+                (message + "\n" +  highscore.getHighscoreString()),
+                "Pistetilasto",
+                JOptionPane.INFORMATION_MESSAGE);
     }
 
     public String askInput(String message) {

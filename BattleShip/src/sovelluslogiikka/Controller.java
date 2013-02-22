@@ -26,7 +26,6 @@ public class Controller {
      * Pelaaja olio, mallintaa toista pelaajaa
      */
     private Player player;
-    private Player opponent;
     /**
      * Mallintaa tietokone vastustajaa
      */
@@ -58,7 +57,7 @@ public class Controller {
      */
     private Direction direction;
     /**
-     * Kyselijä olio joka hoitaa kyselyt sekä viestien esittämisen käyttäjälle
+     * Olio joka hoitaa kyselyt sekä viestien esittämisen käyttäjälle
      */
     private Asker asker;
     /**
@@ -66,8 +65,18 @@ public class Controller {
      * pelilautana toimivien nappuloiden taustaväriä tai asettaa niihin tekstiä
      */
     private Draw drawer;
+    /**
+     * Paneeli ohjelman pääikkunassa, joka näyttää kuinka monta laivaa kullakin
+     * pelaajalla on jäljellä
+     */
     private StatsPane stats;
+    /**
+     * Pitää huolta parhaiden tulosten listaamisesta
+     */
     private HighScore highscore;
+    /**
+     * Vuoro, jota ollaan pelaamassa
+     */
     private int turns;
 
     /**
@@ -104,13 +113,20 @@ public class Controller {
         this.stats = stats;
     }
 
-    /*
-     * Kysyy pelaajan nimen, joka sitten näytetään ikkunan tilannetieto kohdassa.
-     * Nimeä käytetään lisäksi pelaajan voittaessa highscore tiedoston kirjoit-
-     * tamiseen.
+    /**
+     * Kysyy pelaajan nimen, joka sitten näytetään ikkunan tilannetieto
+     * kohdassa. Nimeä käytetään lisäksi pelaajan voittaessa highscore tiedoston
+     * kirjoit- tamiseen.
      */
     public void setPlayerNames() {
         stats.setPlayerName(asker.askInput("Anna nimesi"));
+    }
+
+    /**
+     * Tyhjentää highscore tiedoston
+     */
+    public void resetHighscore() {
+        highscore.reset();
     }
 
     /**
@@ -170,7 +186,33 @@ public class Controller {
      * -nappia. Apumetodi kehityksen tueksi.
      */
     public void showOpponentShips() {
-        drawer.drawOpponentBoard(boards[1]);
+        drawer.drawOpponentBoard(boards, turns);
+    }
+
+    /**
+     * Pelaajan voittaessa laitetaan pelin tulos highscore listaan jos se on
+     * kymmenen parhaan joukossa. Tuloksen kuulumista kymmenen parhaan jouk-
+     * koon tutkii highscore olion checkifscoretopten metodi
+     */
+    public void setHighScore() {
+        if (highscore.checkIfScoreTopTen(turns)) {
+            highscore.addScore(stats.getPlayerName(), turns);
+            showHighScore("Onnittelut! Tuloksesi oli kymmenen parhaan joukossa.");
+        }       
+    }
+
+    /**
+     * Tutkii onko highscore listalla pelejä listattuna ja kutsuu asker
+     * olion showhighscore metodia oikeanlaisella parametrilla. Tuo
+     * metodi näyttää highscore listan tai ilmoituksen jos lista on tyhä
+     * @param message
+     */
+    public void showHighScore(String message) {
+        if (highscore.getScores().isEmpty()) {
+            asker.showHighScore("Tuloslistalla ei ole vielä yhtään tulosta!", highscore);
+        } else {
+            asker.showHighScore(message, highscore);
+        }
     }
 
     /**
@@ -185,6 +227,7 @@ public class Controller {
         } else if (computerOpponent.allShipsLost()) {
             asker.presentWarning("Sait upotettua kaikki vastustajan laivat. Onneksi olkoon voitit!");
             gameEnded = true;
+            setHighScore();
             turns = 1;
         }
     }
@@ -294,6 +337,10 @@ public class Controller {
         }
     }
 
+    /**
+     * Kutsuu draw luokan samannimistä metodia joka päivittää tilanteen tilan-
+     * netietopaneeliin.
+     */
     public void updateStats() {
         drawer.updateStats(boards, turns);
     }

@@ -20,6 +20,10 @@ public class BattleShip {
         Board lauta = new Board(10, 4);
         final Player pelaaja = new Player(lauta);
         final HighScore highscore = new HighScore();
+        
+       // highscore.reset();
+
+        System.out.println(highscore.getHighscoreString());
 
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
