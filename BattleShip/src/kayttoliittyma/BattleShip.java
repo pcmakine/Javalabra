@@ -20,8 +20,10 @@ public class BattleShip {
         Board lauta = new Board(10, 4);
         final Player pelaaja = new Player(lauta);
         final HighScore highscore = new HighScore();
-        
-       // highscore.reset();
+        highscore.reset();
+        highscore.addScore("Donald", 70);
+        highscore.addScore("Daisy", 50);
+
 
         System.out.println(highscore.getHighscoreString());
 

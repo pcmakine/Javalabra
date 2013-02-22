@@ -8,7 +8,7 @@ import java.awt.Color;
 import sovelluslogiikka.*;
 import javax.swing.JButton;
 import java.awt.Font;
-import kayttoliittyma.windowComponents.sidePaneComponents.StatsPane;
+import kayttoliittyma.windowComponents.sidePaneComponents.StatsArea;
 
 /**
  * Luokka hoitaa laudalla olevien nappien taustavärin vaihtamisen ja niihin
@@ -38,7 +38,7 @@ public class Draw {
      * Sivupaneelissa oleva tekstikenttä johon tämä luokka päivittää tilanteen
      * jokaisen vuoron lopussa.
      */
-    StatsPane stats;
+    StatsArea stats;
 
     /**
      * Luo uuden piirrustus -olion
@@ -49,7 +49,7 @@ public class Draw {
     /**
      * Asettaa arvot fontille ja nappuloiden oletusvärille
      */
-    public void initDrawValues(StatsPane stats) {
+    public void initDrawValues(StatsArea stats) {
         buttonDefaultColor = squares[0][0].getBackground();
         newButtonFont = new Font("Tahoma", squares[0][0].getFont().getStyle(), 6);
         this.stats = stats;
@@ -81,7 +81,7 @@ public class Draw {
      * @param opponentBoard vastustajan lauta, joka pitää piirtää
      */
     public void drawOpponentBoard(Board[] boards, int turns) {
-        drawBoard(boards, turns);   
+        drawBoard(boards, turns);
         for (int i = 0; i < boards[1].getSize(); i++) {
             for (int j = 0; j < boards[1].getSize(); j++) {
                 if (boards[1].getSquares()[i][j].isShot()) {
@@ -175,8 +175,8 @@ public class Draw {
     }
 
     /**
-     * Vaihtaa yhden pelaajan ja vastustajan laudan napin taustavärin 
-     * harmaaksi
+     * Vaihtaa yhden pelaajan ja vastustajan laudan napin taustavärin harmaaksi
+     *
      * @param boards boards[0] pelaajan lauta, boards[1] vastustajan lauta
      * @param i napin y-koordinaatti
      * @param j napin x-koordinaatti
@@ -193,6 +193,11 @@ public class Draw {
         }
     }
 
+    /**
+     * Asettaa uponneiden laivojen taustavärin mustaksi
+     *
+     * @param boards boards[0] pelaajan lauta, boards[1] vastustajan lauta
+     */
     public void setSankShipsBlack(Board[] laudat) {
         for (int k = 0; k < 2; k++) {
             Ship[] laivat = laudat[k].getShips();
@@ -215,9 +220,16 @@ public class Draw {
         }
     }
 
-    public void setShotSquaresX(Board[] laudat, int i, int j) {
+    /**
+     * Apumetodi joka asettaa ammuttuihin ruutuihin x kirjaimen
+     *
+     * @param boards boards[0] pelaajan lauta, boards[1] vastustajan lauta
+     * @param i napin y-koordinaatti
+     * @param j napin x-koordinaatti
+     */
+    private void setShotSquaresX(Board[] boards, int i, int j) {
         for (int k = 0; k < 2; k++) {
-            if (laudat[k].getSquares()[i][j].isShot()) {
+            if (boards[k].getSquares()[i][j].isShot()) {
                 if (k == 0) {
                     squares[j][i].setFont(newButtonFont);
                     squares[j][i].setText("X");

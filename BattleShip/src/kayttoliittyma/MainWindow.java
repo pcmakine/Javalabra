@@ -63,7 +63,7 @@ public class MainWindow extends JFrame {
         drawer = new Draw();
         this.asker = new Asker(this);
         initUI();
-        controller.initController(asker, drawer,sidePane.getStatsPane());
+        controller.initController(asker, drawer,sidePane.getStatsArea());
 
     }
 
@@ -74,14 +74,14 @@ public class MainWindow extends JFrame {
         sidePane = new SidePane(controller);
         BoardArea mySide = new BoardArea(controller, "player", drawer);
         BoardArea opponentSide = new BoardArea(controller, "opponent", drawer);
-        ControlButtonPane controlButtons = new ControlButtonPane(controller);
+        ControlButtonArea controlButtons = new ControlButtonArea(controller);
         menu = new MyMenuBar(controller);
         this.setJMenuBar(menu);
         mainPanel.add(sidePane, BorderLayout.WEST);
         mainPanel.add(mySide, BorderLayout.CENTER);
         mainPanel.add(opponentSide, BorderLayout.EAST);
         mainPanel.add(controlButtons, BorderLayout.SOUTH);
-        drawer.initDrawValues(sidePane.getStatsPane());
+        drawer.initDrawValues(sidePane.getStatsArea());
     }
 
     /**

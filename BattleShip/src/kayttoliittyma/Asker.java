@@ -30,6 +30,15 @@ public class Asker {
         this.mainWindow = mainWindow;
     }
 
+    /**
+     * Näyttää huippupisteet käyttäjälle parametrinaan saamansa merkki-
+     * jonon alapuolella. Toistaiseksi ei muotoile merkkijonoa taulukoksi, joten
+     * pisteet eivät välttämättä ole allekkain
+     * @param message Viesti joka käyttäjälle halutaan näyttää pistetaulukon
+     * yläpuolella
+     * @param highscore highscore olio jonka metodia gethighscorestring käyte-
+     * tään huippupisteiden selvittämiseksi.
+     */
     public void showHighScore(String message, HighScore highscore) {
         JOptionPane.showMessageDialog(mainWindow,
                 (message + "\n" +  highscore.getHighscoreString()),
@@ -37,6 +46,13 @@ public class Asker {
                 JOptionPane.INFORMATION_MESSAGE);
     }
 
+    /**
+     * Kysyy käyttäjän nimeä esittäen parametrina saamansa viestin käyt-
+     * täjälle
+     * @param message viesti joka esitetään käyttäjälle
+     * @return palauttaa käyttäjän syöttämän nimen, jonka pitää olla alle kym-
+     * menen merkkiä pitkä.
+     */
     public String askInput(String message) {
         String dialog = "";
         try {

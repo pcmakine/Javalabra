@@ -5,7 +5,8 @@
 package kayttoliittyma.windowComponents;
 
 /**
- *
+ * Mallintaa aluetta jossa on pelilauta ja pelilaudan yläpuolella label
+ * joka kertoo kenen lauta on kyseessä. Laajentaa jpanelia
  * @author pcmakine
  */
 import java.awt.Dimension;
@@ -17,20 +18,43 @@ import kayttoliittyma.Draw;
 
 public class BoardArea extends JPanel {
 
-    private Controller controller;
+    /**
+     * Label joka kertoo kenen lauta on labelin alapuolella
+     */
     private JLabel boardLabel;
+    
+    /**
+     * ButtonBoard tyyppinen olio. Käytännössä pelilauta joka koostuu buttoneista
+     */
     private ButtonBoard board;
+    
+    /**
+     * Pelaajatyyppi, kertoo ollaanko tekemässä pelaajan vai vastustajan lautaa
+     */
     private String playerType;
     
+    
+    /**
+     * Tekee uuden boardarea olion ja kutsuu metodeita jotka tekevät 
+     * boardarean osat ja lisäävät ne boardareaan
+     * @param controller controller tyyppinen olio joka välitetään boardarean 
+     * osille
+     * @param playerType pelaajatyyppi, joko pelaaja tai vastustaja
+     * @param drawer piirto-olio, joka välitetään alueen osille.
+     */
     public BoardArea(Controller controller, String playerType, Draw drawer) {
-        this.controller = controller;
         this.playerType = playerType;
         makeLayout();
-        createComponents(drawer);
+        createComponents(drawer, controller);
         addComponentsTogether();
     }
 
-    private void createComponents(Draw drawer) {
+    /**
+     * Tekee alueen osat
+     * @param drawer piirto-olio, välitetään tehtävälle buttonboard oliolle
+     * @param controller controller-olio, välitetään buttonboard oliolle
+     */
+    private void createComponents(Draw drawer, Controller controller) {
         if (playerType.equals("player")) {
             boardLabel = new JLabel("Oma lauta");
         }
@@ -38,14 +62,19 @@ public class BoardArea extends JPanel {
             boardLabel = new JLabel("Vastustajan lauta");
         }           
            board = new ButtonBoard(controller, playerType, drawer);
-
     }
 
+    /**
+     * Lisää tehdyt componentit alueeseen
+     */
     private void addComponentsTogether() {
         this.add(boardLabel);
         this.add(board);
     }
 
+    /**
+     * Tekee layouting sekä asettaa koon
+     */
     private void makeLayout() {
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         this.setPreferredSize(new Dimension(500, 400));

@@ -288,6 +288,10 @@ public class Board {
         return shipsDifferentSizeMax;
     }
 
+    /**
+     * Metodi testaamisen tueksi
+     * @return merkkijonoesitys pelilaudasta
+     */
     @Override
     public String toString() {
         String tulostettava = "  0 1 2 3 4 5 6 7 8 9\n";

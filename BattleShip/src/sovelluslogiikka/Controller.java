@@ -11,7 +11,7 @@ package sovelluslogiikka;
 import kayttoliittyma.Asker;
 import kayttoliittyma.Draw;
 import kayttoliittyma.Vuoro;
-import kayttoliittyma.windowComponents.sidePaneComponents.StatsPane;
+import kayttoliittyma.windowComponents.sidePaneComponents.StatsArea;
 import highScore.HighScore;
 
 /**
@@ -69,13 +69,13 @@ public class Controller {
      * Paneeli ohjelman pääikkunassa, joka näyttää kuinka monta laivaa kullakin
      * pelaajalla on jäljellä
      */
-    private StatsPane stats;
+    private StatsArea stats;
     /**
      * Pitää huolta parhaiden tulosten listaamisesta
      */
     private HighScore highscore;
     /**
-     * Vuoro, jota ollaan pelaamassa
+     * Vuoron järjestysnumero, jota ollaan pelaamassa
      */
     private int turns;
 
@@ -107,7 +107,7 @@ public class Controller {
      * @param drawer Luokka joka osaa muuttaa pelaajien lautojen ruutujen
      * taustaväriä.
      */
-    public void initController(Asker asker, Draw drawer, StatsPane stats) {
+    public void initController(Asker asker, Draw drawer, StatsArea stats) {
         this.asker = asker;
         this.drawer = drawer;
         this.stats = stats;

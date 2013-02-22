@@ -13,35 +13,64 @@ import javax.swing.JMenuItem;
 import sovelluslogiikka.Controller;
 
 /**
+ * Mallintaa pääikkunassa olevaa menubaria
  *
  * @author pcmakine
  */
 public class MyMenuBar extends JMenuBar {
 
+    /**
+     * Menu johon menun eri valinnat lisätään
+     */
     private JMenu menu;
+    /**
+     * controller olio jonka metodeita kutsutaan kun menusta tehdään valintoja
+     */
     private Controller controller;
+    /**
+     * valinta menussa josta nähdään huipputulokset
+     */
     private JMenuItem highscore;
+    /**
+     * valinta menussa josta aloitetaan uusi peli
+     */
     private JMenuItem newGame;
+    /**
+     * valinta menussa josta nollataan huipputulokset
+     */
     private JMenuItem resetHighscore;
 
+    /**
+     * Tekee uuden mymenubar tyyppisen olion ja kutsuu metodeja jotka tekevät ja
+     * lisäävät sen komponentit
+     *
+     * @param controller controller olio jonka metodeita kutsutaan kun menusta
+     * tehdään valintoja
+     */
     public MyMenuBar(Controller controller) {
         this.controller = controller;
         createComponents();
         addComponentsTogether();
     }
 
-    public void createComponents() {
+    /**
+     * luo menubarin komponentit
+     */
+    private void createComponents() {
         this.menu = new JMenu("Menu");
-        this.highscore = new JMenuItem("Pistetaulukko");
+        this.highscore = new JMenuItem("Huipputulokset");
         this.newGame = new JMenuItem("Uusi peli");
-        this.resetHighscore = new JMenuItem("Tyhjennä tuloslista");
+        this.resetHighscore = new JMenuItem("Nollaa huipputulokset");
         makeHighscoreListener();
         makeNewGameListener();
         makeResetHighscoreListener();
 
     }
-    
-        private void makeResetHighscoreListener() {
+
+    /**
+     * Tekee kuuntelijan menun nollaa huipputulokset valinnalle
+     */
+    private void makeResetHighscoreListener() {
         ActionListener resetHighscoreListener = new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 controller.resetHighscore();
@@ -50,7 +79,9 @@ public class MyMenuBar extends JMenuBar {
         resetHighscore.addActionListener(resetHighscoreListener);
     }
 
-
+    /**
+     * Tekee kuuntelijan menun huipputulokset valinnalle
+     */
     private void makeHighscoreListener() {
         ActionListener highscoreListener = new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
@@ -60,6 +91,9 @@ public class MyMenuBar extends JMenuBar {
         highscore.addActionListener(highscoreListener);
     }
 
+    /**
+     * Tekee kuuntelijan menun uusi peli valinnalle
+     */
     private void makeNewGameListener() {
         ActionListener newGameListener = new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
@@ -69,6 +103,9 @@ public class MyMenuBar extends JMenuBar {
         newGame.addActionListener(newGameListener);
     }
 
+    /**
+     * Lisää kaikki komponentit yhteen
+     */
     public void addComponentsTogether() {
         menu.add(highscore);
         menu.add(newGame);
