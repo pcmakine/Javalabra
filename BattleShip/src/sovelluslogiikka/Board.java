@@ -4,14 +4,14 @@
  */
 package sovelluslogiikka;
 
+
+import java.util.*;
 /**
  * Mallintaa pelilautaa ja pitää kirjaa sen Ruutu tyyppisistä ruutuolioista
  *
  * @author pcmakine
  *
  */
-import java.util.*;
-
 public class Board {
 
     /**
@@ -48,16 +48,16 @@ public class Board {
      * laivojen määrän. Kutsuu teeruudut metodia joka tekee Ruutu taulukkoon
      * ruutuja mallintavat ruutu oliot.
      *
-     * @param koko Laudan sivun pituus. Lauta on aina neliön muotoinen
-     * @param erimittaisia Erimittaisten laivojen määrä
+     * @param size Laudan sivun pituus. Lauta on aina neliön muotoinen
+     * @param differentLengths Erimittaisten laivojen määrä
      */
-    public Board(int koko, int erimittaisia) {
-        this.squares = new Square[koko][koko];
-        this.size = koko;
+    public Board(int size, int differentLengths) {
+        this.squares = new Square[size][size];
+        this.size = size;
         createSquares();
         this.numberofShips = 0;
         ships = new Ship[10];
-        shipsDifferentSize = new int[erimittaisia];
+        shipsDifferentSize = new int[differentLengths];
     }
 
     /**
@@ -116,11 +116,11 @@ public class Board {
     /**
      * Tutkii kuinka monta tietynmittaista laivaa voidaan vielä tehdä.
      *
-     * @param pituus Tarkasteltava laivan pituus
+     * @param length Tarkasteltava laivan pituus
      * @return tekemättömien pituus mittaisten laivojen määrä
      */
-    public int shipsAvailable(int pituus) {
-        return (shipsDifferentSizeMax[pituus - 1] - shipsDifferentSize[pituus - 1]);
+    public int shipsAvailable(int length) {
+        return (shipsDifferentSizeMax[length - 1] - shipsDifferentSize[length - 1]);
     }
 
     /**
@@ -146,19 +146,19 @@ public class Board {
      * sekä ympäröivät ruudut, jottei niihin voida
      * tehdä uusia laivoja. Tähän käytetään lockSquares metodia.
      *
-     * @param alku laivan alkupiste. Alku[0] on laivan alkupisteen
+     * @param beginning laivan alkupiste. Alku[0] on laivan alkupisteen
      * x-koordinaatti ja alku[1] vastaavasti alkupisteen y-koordinaatti
-     * @param suunta Kertoo laivan suunnan, alas tai oikealle
-     * @param pituus Laivan pituus
+     * @param direction Kertoo laivan suunnan, alas tai oikealle
+     * @param length Laivan pituus
      * @return true jos laiva onnistutaan tekemään, muuten false
      */
-    public boolean createShip(int alku[], Direction suunta, int pituus) {        //alku[0] on alun x koordinaatti ja alku[1] on alun y koordinaatti
-        int[] xKoord = countxCoords(alku, suunta, pituus);
-        int[] yKoord = countyCoords(alku, suunta, pituus);
-        if (isOnBoard(alku, suunta, pituus) && noAdjacentShips(alku, suunta, pituus) && shipsAvailable(pituus) > 0) {
+    public boolean createShip(int beginning[], Direction direction, int length) {        //alku[0] on alun x koordinaatti ja alku[1] on alun y koordinaatti
+        int[] xKoord = countxCoords(beginning, direction, length);
+        int[] yKoord = countyCoords(beginning, direction, length);
+        if (isOnBoard(beginning, direction, length) && noAdjacentShips(beginning, direction, length) && shipsAvailable(length) > 0) {
             Ship laiva = new Ship(xKoord, yKoord);
             ships[numberofShips] = laiva;
-            shipsDifferentSize[pituus - 1]++;
+            shipsDifferentSize[length - 1]++;
             numberofShips++;
             setShipsonSquares(xKoord, yKoord);
             lockSquares(xKoord, yKoord);
@@ -171,21 +171,21 @@ public class Board {
      * Laskee y -koordinaattien arvot annetulle alkupisteelle, suunnalle ja
      * pituudelle.
      *
-     * @param alku Taulukko alkupisteistä. Alku[0] x-koordinaatti, alku[1]
+     * @param beginning Taulukko alkupisteistä. Alku[0] x-koordinaatti, alku[1]
      * y-koordinaatti
-     * @param suunta Laivan suunta alkupisteestä. Oikealle tai alas
-     * @param pituus Laivan pituus (ruutuina)
+     * @param direction Laivan suunta alkupisteestä. Oikealle tai alas
+     * @param length Laivan pituus (ruutuina)
      * @return Palauttaa taulukon lasketuista y-koordinaateista
      */
-    public int[] countyCoords(int alku[], Direction suunta, int pituus) {
-        int yCoords[] = new int[pituus];
-        if (suunta == Direction.DOWN) {
-            for (int i = 0; i < pituus; i++) {
-                yCoords[i] = alku[1] + i;
+    public int[] countyCoords(int beginning[], Direction direction, int length) {
+        int yCoords[] = new int[length];
+        if (direction == Direction.DOWN) {
+            for (int i = 0; i < length; i++) {
+                yCoords[i] = beginning[1] + i;
             }
-        } else if (suunta == Direction.RIGHT) {             //laiva vaakatasossa, y-koordinaatti ei muutu
-            for (int i = 0; i < pituus; i++) {
-                yCoords[i] = alku[1];
+        } else if (direction == Direction.RIGHT) {             //laiva vaakatasossa, y-koordinaatti ei muutu
+            for (int i = 0; i < length; i++) {
+                yCoords[i] = beginning[1];
             }
         }
         return yCoords;
@@ -195,21 +195,21 @@ public class Board {
      * Laskee x-koordinaattien arvot annetulle alkupisteelle, suunnalle ja
      * pituudelle.
      *
-     * @param alku Taulukko alkupisteistä. Alku[0] x-koordinaatti, alku[1]
+     * @param beginning Taulukko alkupisteistä. Alku[0] x-koordinaatti, alku[1]
      * y-koordinaatti
-     * @param suunta Laivan suunta alkupisteestä. Oikealle tai alas
-     * @param pituus Laivan pituus (ruutuina)
+     * @param direction Laivan suunta alkupisteestä. Oikealle tai alas
+     * @param length Laivan pituus (ruutuina)
      * @return Palauttaa taulukon lasketuista x-koordinaateista
      */
-    public int[] countxCoords(int alku[], Direction suunta, int pituus) {
-        int xCoords[] = new int[pituus];
-        if (suunta == Direction.RIGHT) {
-            for (int i = 0; i < pituus; i++) {
-                xCoords[i] = alku[0] + i;
+    public int[] countxCoords(int beginning[], Direction direction, int length) {
+        int xCoords[] = new int[length];
+        if (direction == Direction.RIGHT) {
+            for (int i = 0; i < length; i++) {
+                xCoords[i] = beginning[0] + i;
             }
-        } else if (suunta == Direction.DOWN) {
-            for (int i = 0; i < pituus; i++) {
-                xCoords[i] = alku[0];
+        } else if (direction == Direction.DOWN) {
+            for (int i = 0; i < length; i++) {
+                xCoords[i] = beginning[0];
             }
         }
         return xCoords;
@@ -217,21 +217,21 @@ public class Board {
 
     /**
      * Tarkistaa menisikö laiva jota yritetään tehdä laudan ulkopuolelle
-     * @param alku Taulukko jossa alku[0] on laivan alkupisteen x-koordinaatti
+     * @param beginning Taulukko jossa alku[0] on laivan alkupisteen x-koordinaatti
      * ja alku[1] alkupisteen y-koordinaatti
-     * @param suunta Suunta johon laiva menee alkupisteestä. Joko oikealle tai
+     * @param direction Suunta johon laiva menee alkupisteestä. Joko oikealle tai
      * alas
-     * @param pituus Kertoo laivan pituuden
+     * @param length Kertoo laivan pituuden
      * @return Palauttaa true jos laiva on laudalla ja muuten false
      *
      */
-    public boolean isOnBoard(int alku[], Direction suunta, int pituus) {
-        if (suunta == Direction.DOWN) {
-            if (alku[1] > (size - pituus) || alku[0] < 0 || alku[1] < 0) {
+    public boolean isOnBoard(int beginning[], Direction direction, int length) {
+        if (direction == Direction.DOWN) {
+            if (beginning[1] > (size - length) || beginning[0] < 0 || beginning[1] < 0) {
                 return false;
             }
-        } else if (suunta == Direction.RIGHT) {
-            if (alku[0] > (size - pituus) || alku[0] < 0 || alku[1] < 0) {
+        } else if (direction == Direction.RIGHT) {
+            if (beginning[0] > (size - length) || beginning[0] < 0 || beginning[1] < 0) {
                 return false;
             }
         }
@@ -242,14 +242,14 @@ public class Board {
      * Tutkii ovatko ruudut joihin laivaa yritetään tehdä lukittuina. Jos ovat
      * lukittuina, laivaa ei voi tehdä. Laivoja ei siis voi tehdä vierekkäin.
      *
-     * @param alku Taulukko jossa alku[0] on laivan alkupisteen x-koordinaatti
-     * @param suunta Laivan suunta alkupisteestä. Alas tai oikealle
-     * @param pituus Laivan pituus (ruutuina)
-     * @return
+     * @param beginning Taulukko jossa alku[0] on laivan alkupisteen x-koordinaatti
+     * @param direction Laivan suunta alkupisteestä. Alas tai oikealle
+     * @param length Laivan pituus (ruutuina)
+     * @return true jos laivan vieressä ei ole laivoja, muuten false
      */
-    public boolean noAdjacentShips(int alku[], Direction suunta, int pituus) {        //laivaa ei voi tehdä jos viereisissä ruuduissa on laiva
-        int[] xCoords = countxCoords(alku, suunta, pituus);
-        int[] yCoords = countyCoords(alku, suunta, pituus);
+    public boolean noAdjacentShips(int beginning[], Direction direction, int length) {        //laivaa ei voi tehdä jos viereisissä ruuduissa on laiva
+        int[] xCoords = countxCoords(beginning, direction, length);
+        int[] yCoords = countyCoords(beginning, direction, length);
         for (int i = 0; i < xCoords.length; i++) {
             for (int j = 0; j < yCoords.length; j++) {
                 try {
@@ -294,14 +294,14 @@ public class Board {
      */
     @Override
     public String toString() {
-        String tulostettava = "  0 1 2 3 4 5 6 7 8 9\n";
+        String toPrint = "  0 1 2 3 4 5 6 7 8 9\n";
         for (int i = 0; i < this.size; i++) {
-            tulostettava = tulostettava + i + " ";
+            toPrint = toPrint + i + " ";
             for (int j = 0; j < this.size; j++) {
-                tulostettava = tulostettava + squares[j][i] + " ";
+                toPrint = toPrint + squares[j][i] + " ";
             }
-            tulostettava = tulostettava + "\n";
+            toPrint = toPrint + "\n";
         }
-        return tulostettava;
+        return toPrint;
     }
 }

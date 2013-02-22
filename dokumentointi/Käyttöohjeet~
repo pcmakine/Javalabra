@@ -1,0 +1,10 @@
+Käyttöohjeet laivanupotus peliin:
+
+Pelin tarkoitus:
+Tarkoituksena pelissä on asettaa kymmenen laivaa omalle laudalle, jonka jälkeen pitäisi yrittää arvata mihin vastustaja on sijoittanut omat laivansa. Laivoja yritetään löytää ampumalla vastustajan ruutuihin. Tässä pelissä se tapahtuu klikkaamalla ruutua vastustajan laudalta. Se pelaaja joka ensin löytää vastustajan laivat voittaa. Tätä versiota pelistä voi toistaiseksi pelata vain tietokonetta vastaan. Sääntöihin kuuluuu myös että kahdessa vierekkäisessä ruudussa (myöskään vinottain vierekkäisissä) ei saa olla laivoja. Laivat voidaan asettaa joko pystysuunnassa tai vaakasuunnassa. Vinottaiset laivat eivät ole sallittuja.
+
+Pelin aloittaminen
+Käynnistettyäsi laivanupotuksen näet ruudun vasemmassa laidassa kentät "Laivan pituus" ja "Haluatko tehdä vaaka vai pystylaivan". Näistä voit valita tehtävän laivan pituuden ja suunnan. 1 pituisia laivoja pitää tehdä yhteensä neljä, 2 pituisia kolme, 3 pituisia kaksi ja 4 pituisia yksi. Valittuasi laivan pituuden ja suunnan klikkaa jotain lautasi ruutua asettaaksesi laivan. Jos valitset vaaka laivan laiva tehdään alkaen valitsemastasi ruudusta oikealle päin. Vastaavasti valittuasi pystylaivan se tehdään alaspäin valitsemastasi ruudusta. Voit myös missä tahansa vaiheessa päättää että haluat asettaa loput laivat satunnaisesti painamalla ruudun alalaidasta lisää satunnaisesti nappia. Kun kaikki laivat ovat laudalla on aika aloittaa peli. Tämä tapahtuu klikkaamalla Aloita peli nappulaa.
+
+Pelin kulku
+Voit ampua vastustajan ruutuihin klikkaamalla ruutua johon haluat ampua. Jos ampumaasi ruutuun tulee pieni x-kirjain tarkoittaa se, että ruudussa ei ollut laivaa. Jos ruutu kuitenkin lisäksi muuttuu harmaaksi, tarkoittaa se että osuit johonkin vastustajan laivoista. Kun olet saanut laivan upotettua tiedät sen siitä että se muuttuu mustaksi. Ammuttuasi tietokonepelaaja yrittää automaattisesti ampua takaisin sinun laudallesi. Tämän jälkeen on taas sinun vuorosi ampua. Ampumista jatketaan tällä tavoin kunnes toisella pelaajalla ei ole yhtään laivaa jäljellä. 

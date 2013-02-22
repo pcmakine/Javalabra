@@ -1,0 +1,5 @@
+Testikattavuus ei ole täydellinen. Sen jälkeen kun graafinen käyttöliittymä saatiin pystyyn, on peliä testattu lähinnä sen kautta. Kokeiltu että toimiiko peli erilaisissa tilanteissa.
+
+Suuria bugeja ei ole toistaiseksi havaittu. Viimeiset muutokset peliin on tosin tehty tänään 22.2, joten joitain bugeja saattaa hyvinkin olla. Highscore lista ei muotoile pisteitä taulukoksi, joten pistelista saattaa näyttää hassulta jos listassa on hyvin erimittaisia nimiä.
+
+

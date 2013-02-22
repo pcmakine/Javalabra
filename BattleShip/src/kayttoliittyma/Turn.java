@@ -5,9 +5,9 @@
 package kayttoliittyma;
 
 /**
- *
+ * Onko pelaajan vai vastustajan vuoro
  * @author pcmakine
  */
-public enum Vuoro {
-    PELAAJA, VASTUSTAJA
+public enum Turn {
+    PLAYER, OPPONENT
 }

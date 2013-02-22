@@ -11,19 +11,15 @@ import javax.swing.SwingUtilities;
 import sovelluslogiikka.Board;
 
 /**
- *
+ * Pääohjelma
  * @author pcmakine
  */
 public class BattleShip {
 
     public static void main(String[] args) {
-        Board lauta = new Board(10, 4);
-        final Player pelaaja = new Player(lauta);
+        Board board = new Board(10, 4);
+        final Player pelaaja = new Player(board);
         final HighScore highscore = new HighScore();
-        highscore.reset();
-        highscore.addScore("Donald", 70);
-        highscore.addScore("Daisy", 50);
-
 
         System.out.println(highscore.getHighscoreString());
 

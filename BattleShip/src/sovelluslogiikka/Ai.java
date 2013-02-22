@@ -4,6 +4,8 @@
  */
 package sovelluslogiikka;
 
+
+import java.util.*;
 /**
  * Mallintaa tietokonepelaajaa ja perii pelaaja -olion metodit. Tällä hetkellä
  * käytössä on kaksi mahdollista ampumismetodia, täysin satunnainen randomshoot
@@ -12,8 +14,6 @@ package sovelluslogiikka;
  *
  * @author Pete
  */
-import java.util.*;
-
 public class Ai extends Player {
 
     /**

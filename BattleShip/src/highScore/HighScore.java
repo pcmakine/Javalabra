@@ -4,6 +4,9 @@
  */
 package highScore;
 
+
+import java.io.*;
+import java.util.*;
 /**
  * Luokka arvojen lisäämiseen ja niiden hakemiseen high score tiedostosta
  * Muokattu koodista
@@ -11,9 +14,6 @@ package highScore;
  *
  * @author pcmakine
  */
-import java.io.*;
-import java.util.*;
-
 public class HighScore {
 
     /**

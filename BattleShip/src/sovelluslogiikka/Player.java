@@ -4,13 +4,14 @@
  */
 package sovelluslogiikka;
 
+
+import java.lang.Math;
+
 /**
  * Mallintaa pelaajaa. Tuntee pelilautansa.
  *
  * @author pcmakine
  */
-import java.lang.Math;
-
 public class Player {
 
     /**
@@ -130,11 +131,12 @@ public class Player {
         }
         board.getSquares()[target[0]][target[1]].setShot();
         for (int i = 0; i < board.getNumberofShips(); i++) {    //kay läpi kaikki laivat
-            int[] xKoord = board.getShips()[i].getxCoords();
-            int[] yKoord = board.getShips()[i].getyCoords();
+            Ship ships[] = board.getShips();
+            int[] xKoord = ships[i].getxCoords();
+            int[] yKoord = ships[i].getyCoords();
             for (int j = 0; j < xKoord.length; j++) {
                 if (xKoord[j] == target[0] && yKoord[j] == target[1]) {
-                    board.getShips()[i].setHitPoint(target);
+                    ships[i].setHitPoint(target);
                 }
             }
         }

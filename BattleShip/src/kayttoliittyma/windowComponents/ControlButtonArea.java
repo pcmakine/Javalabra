@@ -4,6 +4,12 @@
  */
 package kayttoliittyma.windowComponents;
 
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JPanel;
+import javax.swing.JButton;
+import sovelluslogiikka.Controller;
 /**
  * Luokka mallintaa pääikkunan aluetta joka on pelilautojen alapuolella.
  * Alueessa on napit joilla voidaan lisätä laivoja tai aloittaa peli. Lisäksi
@@ -11,12 +17,6 @@ package kayttoliittyma.windowComponents;
  *
  * @author Pete
  */
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.JPanel;
-import javax.swing.JButton;
-import sovelluslogiikka.Controller;
-
 public class ControlButtonArea extends JPanel {
 
     /**

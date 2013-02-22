@@ -4,6 +4,8 @@
  */
 package highScore;
 
+
+import java.io.Serializable;
 /**
  * Muokattu koodista: http://forum.codecall.net/topic/50071-making-a-simple-high-score-system/
  * Mallintaa yhtä huippupistealkiota. Huippupisteeseen liittyy aina pelaajan
@@ -11,8 +13,6 @@ package highScore;
  * sitä parempi.
  * @author pcmakine
  */
-import java.io.Serializable;
-
 public class Score implements Serializable {
 
     /**

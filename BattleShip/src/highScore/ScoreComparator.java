@@ -4,14 +4,14 @@
  */
 package highScore;
 
+
+import java.util.Comparator;
+
 /**
  * Comparator tyyppinen luokka, jota käytetään huipputulosten helppoon
  * järjestämiseen javan collections luokan avulla.
  * @author pcmakine
  */
-import java.util.Comparator;
-
-
 public class ScoreComparator implements Comparator<Score> {
     
     /**

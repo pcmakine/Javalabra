@@ -10,7 +10,7 @@ package sovelluslogiikka;
  */
 import kayttoliittyma.Asker;
 import kayttoliittyma.Draw;
-import kayttoliittyma.Vuoro;
+import kayttoliittyma.Turn;
 import kayttoliittyma.windowComponents.sidePaneComponents.StatsArea;
 import highScore.HighScore;
 
@@ -39,7 +39,7 @@ public class Controller {
      * Kertoo kenen vuoro on. Tarvitaan lähinnä jos peliin saadaan kehitettyä
      * jossain vaiheessa kaksinpeli
      */
-    private Vuoro vuoro;
+    private Turn vuoro;
     /**
      * True jos peli on aloitettu, muuten false
      */
@@ -88,7 +88,7 @@ public class Controller {
      */
     public Controller(Player pelaaja, HighScore highscore) {
         this.player = pelaaja;
-        this.vuoro = vuoro.PELAAJA;
+        this.vuoro = vuoro.PLAYER;
         this.gameStarted = false;
         this.highscore = highscore;
         this.computerOpponent = new Ai(new Board(10, 4), pelaaja.getBoard());
@@ -223,12 +223,10 @@ public class Controller {
         if (player.allShipsLost()) {
             asker.presentWarning("Valitettavasti kaikki laivasi upposivat ja hävisit pelin");
             gameEnded = true;
-            turns = 1;
         } else if (computerOpponent.allShipsLost()) {
             asker.presentWarning("Sait upotettua kaikki vastustajan laivat. Onneksi olkoon voitit!");
             gameEnded = true;
             setHighScore();
-            turns = 1;
         }
     }
 
@@ -240,7 +238,7 @@ public class Controller {
      * @return Palauttaa vuorossa olevan pelaajan.
      */
     public Player getVuorossaOlevaPelaaja() {
-        if (vuoro == vuoro.PELAAJA) {
+        if (vuoro == vuoro.PLAYER) {
             return player;
         } else {
             return computerOpponent;
@@ -265,8 +263,8 @@ public class Controller {
                 if (!gameEnded) {
                     computerOpponent.smartShoot(player.getBoard());
                     checkIfGameOver();
+                    turns++;
                 }
-                turns++;
                 drawer.drawBoard(new Board[]{player.getBoard(), computerOpponent.getBoard()}, turns);
             }
         }

@@ -24,4 +24,4 @@ Sovelluslogiikan puolella jokaisella Player luokan pelaajalla on lauta, johon pu
 
 
 Pelin tulevaisuus:
-Peliä olisi tarkoitus kehittää niin että siinä olisi moninpelimahdollisuus ainakin lokaalisti ja mahdollisesti myös netin kautta. Lisäksi peliin olisi tarkoitus saada mahdollisuus valita laudan koko sekä eripituisten laivojen määrä. Tämä on osin otettu huomioon koodissa, mutta paikoin koot ja laivojen määrät on myös kovakoodattu.
+Peliä olisi tarkoitus kehittää niin että siinä olisi moninpelimahdollisuus ainakin lokaalisti ja mahdollisesti myös netin kautta. Lisäksi peliin olisi tarkoitus saada mahdollisuus valita laudan koko sekä eripituisten laivojen määrä. Tämä on osin otettu huomioon koodissa, mutta paikoin koot ja laivojen määrät on myös kovakoodattu. 

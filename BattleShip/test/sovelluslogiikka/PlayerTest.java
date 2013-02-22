@@ -46,6 +46,42 @@ public class PlayerTest {
     // The methods must be annotated with annotation @Test. For example:
     //
 
+    public void makeAllShips() {
+        player.getBoard().createShip(new int[]{0, 0}, Direction.RIGHT, 4);
+        player.getBoard().createShip(new int[]{0, 3}, Direction.RIGHT, 3);
+        player.getBoard().createShip(new int[]{4, 3}, Direction.RIGHT, 3);
+        player.getBoard().createShip(new int[]{0, 5}, Direction.RIGHT, 2);
+        player.getBoard().createShip(new int[]{3, 5}, Direction.RIGHT, 2);
+        player.getBoard().createShip(new int[]{6, 5}, Direction.RIGHT, 2);
+        player.getBoard().createShip(new int[]{0, 7}, Direction.RIGHT, 1);
+        player.getBoard().createShip(new int[]{2, 7}, Direction.RIGHT, 1);
+        player.getBoard().createShip(new int[]{4, 7}, Direction.RIGHT, 1);
+        player.getBoard().createShip(new int[]{6, 7}, Direction.RIGHT, 1);
+    }
+
+    @Test
+    public void allShipsDoneWorks() {
+        boolean done = player.allShipsDone();
+        makeAllShips();
+        boolean done1 = player.allShipsDone();
+        assertEquals(false, done);
+        assertEquals(true, done1);
+    }
+
+    @Test
+    public void allShipsLostWorks() {
+        makeAllShips();
+        boolean lost = player.allShipsLost();
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                player.shoot(board, new int[]{i, j});
+            }
+        }
+        boolean lost1 = player.allShipsLost();
+        assertEquals(false, lost);
+        assertEquals(true, lost1);
+    }
+
     @Test
     public void hitPointsSetCorrectly() {
         int[] beginning = {4, 7};
@@ -59,9 +95,6 @@ public class PlayerTest {
         player.shoot(board, target);
         player.shoot(board, target1);
         int[][] osumat = board.getShips()[0].getHitCoords();
-        for (int i = 0; i < osumat.length; i++) {
-            System.out.println(osumat[i][0] + ", " + osumat[i][1]);
-        }
         assertArrayEquals(expected, osumat);
 
     }
@@ -71,16 +104,15 @@ public class PlayerTest {
         int[] beginning = {4, 7};
         int[] target = {4, 8};
         int[] target1 = {4, 9};
-        
+
         assertEquals(true, player.shoot(board, beginning));
         assertEquals(true, player.shoot(board, target));
         assertEquals(true, player.shoot(board, target1));
         assertEquals(false, player.shoot(board, target1));
     }
 
-
     @Test
-    public void arvotaankoYhtaPaljonEriSuuntia() {
+    public void equalNumberOfDifferentDirections() {
         Direction[] suuntia = new Direction[100];
         int alasSumma = 0;
         int oikealleSumma = 0;

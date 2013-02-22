@@ -4,12 +4,7 @@
  */
 package kayttoliittyma.windowComponents.sidePaneComponents;
 
-/**
- * Mallintaa aluetta jossa olevilla napeilla käyttäjä voi valita tehtävän laivan
- * pituuden
- *
- * @author pcmakine
- */
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -22,6 +17,12 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import sovelluslogiikka.Controller;
 
+/**
+ * Mallintaa aluetta jossa olevilla napeilla käyttäjä voi valita tehtävän laivan
+ * pituuden
+ *
+ * @author pcmakine
+ */
 public class ShipLengthArea extends JPanel {
 
     /**

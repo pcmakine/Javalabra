@@ -34,7 +34,7 @@ public class Ship {
      * Luo laiva olion ja asettaa muuttujille alkuarvot
      *
      * @param xCoords Laivan x -koordinaatit
-     * @param yKoord Laivan y -koordinaatit
+     * @param yCoords Laivan y -koordinaatit
      */
     public Ship(int xCoords[], int yCoords[]) {
         this.xCoords = xCoords;

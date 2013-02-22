@@ -78,7 +78,8 @@ public class Draw {
      * Piirtää vastustajan laudan eli vaihtaa nappien taustavärin vastustajan
      * laudalla sen mukaan mihin on ammuttu ja missä on laivoja
      *
-     * @param opponentBoard vastustajan lauta, joka pitää piirtää
+     * @param boards taulukko laudoista, vastustajan lauta jota tässä
+     * käsitellään on kohdassa boards[1]
      */
     public void drawOpponentBoard(Board[] boards, int turns) {
         drawBoard(boards, turns);
@@ -175,15 +176,15 @@ public class Draw {
     }
 
     /**
-     * Vaihtaa yhden pelaajan ja vastustajan laudan napin taustavärin harmaaksi
-     *
-     * @param boards boards[0] pelaajan lauta, boards[1] vastustajan lauta
+     * Vaihtaa ammutut ruudut joissa on laiva, harmaiksi.
+     * 
+     * @param boards boards[0] pelaajan lauta, boards[1] vastustajan
      * @param i napin y-koordinaatti
      * @param j napin x-koordinaatti
      */
-    public void setShotShipSquaresGray(Board[] laudat, int i, int j) {
+    public void setShotShipSquaresGray(Board[] boards, int i, int j) {
         for (int k = 0; k < 2; k++) {
-            if (laudat[k].getSquares()[i][j].isShot() && laudat[k].getSquares()[i][j].isShip()) {
+            if (boards[k].getSquares()[i][j].isShot() && boards[k].getSquares()[i][j].isShip()) {
                 if (k == 0) {
                     squares[j][i].setBackground(Color.gray);
                 } else {
@@ -198,9 +199,9 @@ public class Draw {
      *
      * @param boards boards[0] pelaajan lauta, boards[1] vastustajan lauta
      */
-    public void setSankShipsBlack(Board[] laudat) {
+    public void setSankShipsBlack(Board[] boards) {
         for (int k = 0; k < 2; k++) {
-            Ship[] laivat = laudat[k].getShips();
+            Ship[] laivat = boards[k].getShips();
             for (int l = 0; l < laivat.length; l++) {
                 if (laivat[l] == null) {
                     break;

@@ -4,15 +4,15 @@
  */
 package kayttoliittyma;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import highScore.HighScore;
+
 /**
  * Varoittaa käyttäjää dialogi ikkunalla jos jokin menee pieleen
  *
  * @author pcmakine
  */
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import highScore.HighScore;
-
 public class Asker {
 
     /**

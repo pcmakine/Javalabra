@@ -1,0 +1,5 @@
+Testikattavuus ei ole täydellinen. Ai ja controller luokkia ei ole testattu automaattisesti, koska niitä luodessa toimivuus kävi hyvin ilmi myös käyttöliittymästä. Sen jälkeen kun graafinen käyttöliittymä saatiin pystyyn, on peliä testattu lähinnä sen kautta, kokeiltu siis että toimiiko peli erilaisissa tilanteissa. Myös board ja square luokkien tostring metodia on välillä käytetty testaamiseen.
+
+Suuria bugeja ei ole toistaiseksi havaittu. Viimeiset muutokset peliin on tosin tehty tänään 22.2, joten joitain bugeja saattaa hyvinkin olla. Highscore lista ei muotoile pisteitä taulukoksi, joten pistelista saattaa näyttää hassulta jos listassa on hyvin erimittaisia nimiä.
+
+Peli sallii löydetyn laivan viereen ampumisen, vaikkei siinä sääntöjen mukaan laivaa voi ollakaan. Tämän tarkistaminene päätettiin jättää käyttäjän vastuulle.

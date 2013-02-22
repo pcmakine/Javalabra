@@ -88,4 +88,24 @@ public class Square {
     public boolean isLocked() {
         return locked;
     }
+    
+       public String toString() {
+        String tulostettava = "";
+        if (isShot()) {
+            tulostettava = "X";
+        } else {
+            tulostettava = "O";
+        }
+        if (isLocked()) {
+            tulostettava = "Z";
+        } else {
+            tulostettava = "O";
+        }
+        if (ship) {
+            tulostettava = "L";
+        } else {
+            tulostettava = "O";
+        }
+        return tulostettava;
+    }
 }

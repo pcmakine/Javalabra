@@ -19,6 +19,7 @@ public class ShipTest {
 
     private int koko = 10;
     Board lauta;
+    Player player;
 
     public ShipTest() {
     }
@@ -34,34 +35,45 @@ public class ShipTest {
     @Before
     public void setUp() {
         lauta = new Board(koko, 10);
+        player = new Player(lauta);
     }
 
     @After
     public void tearDown() {
     }
-    
-    public void teeTestiLaiva(Direction suunta, int alku[]){
-        
+
+    @Test
+    public void sankAlreadyWorks() {
+        int[] beginning = {koko - 2, koko - 1};
+        lauta.createShip(beginning, Direction.RIGHT, 2);
+        player.shoot(player.getBoard(), beginning);
+        boolean notYet = lauta.getShips()[0].sankAlready();
+        player.shoot(player.getBoard(), new int[]{beginning[0] + 1, beginning[1]});
+        boolean shotDown = lauta.getShips()[0].sankAlready();
+        assertEquals(notYet, false);
+        assertEquals(shotDown, true);
     }
 
     @Test
-    public void horisontaalisellaLaivallaOikeatXKoordinaatit() {
-        int[] alku = {koko - 2, koko - 1};
-        int [] odotettu = {8,9};
-        int[] xkoord = new int[2];
+    public void horizontalShipRightxCoordinates() {
+        int[] beginning = {koko - 2, koko - 1};
+        int[] expected = {8, 9};
+        int[] xcoords = new int[2];
         Ship laiva;
-        lauta.createShip(alku, Direction.RIGHT, 2);
+        lauta.createShip(beginning, Direction.RIGHT, 2);
         laiva = lauta.getShips()[0];
-        xkoord =laiva.getxCoords();
-        assertArrayEquals(odotettu, xkoord);
+        xcoords = laiva.getxCoords();
+        assertArrayEquals(expected, xcoords);
     }
-        public void horisontaalisellaLaivallaOikeatYKoordinaatit() {
+
+    @Test
+    public void horizontalShipRightyCoordinates() {
         int[] alku = {koko - 2, koko - 1};
-        int [] odotettu = {9,9};
+        int[] odotettu = {9, 9};
         int[] ykoord = new int[2];
         lauta.createShip(alku, Direction.RIGHT, 2);
         Ship ship = lauta.getShips()[0];
-        ykoord = ship.getxCoords();
+        ykoord = ship.getyCoords();
         assertArrayEquals(odotettu, ykoord);
     }
 }

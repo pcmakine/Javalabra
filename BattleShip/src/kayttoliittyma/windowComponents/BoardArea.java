@@ -4,18 +4,18 @@
  */
 package kayttoliittyma.windowComponents;
 
-/**
- * Mallintaa aluetta jossa on pelilauta ja pelilaudan yläpuolella label
- * joka kertoo kenen lauta on kyseessä. Laajentaa jpanelia
- * @author pcmakine
- */
+
 import java.awt.Dimension;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import sovelluslogiikka.Controller;
 import kayttoliittyma.Draw;
-
+/**
+ * Mallintaa aluetta jossa on pelilauta ja pelilaudan yläpuolella label
+ * joka kertoo kenen lauta on kyseessä. Laajentaa jpanelia
+ * @author pcmakine
+ */
 public class BoardArea extends JPanel {
 
     /**
